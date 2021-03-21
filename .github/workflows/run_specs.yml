@@ -14,7 +14,6 @@ jobs:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_DB: ${{env.POSTGRES_DB}}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
