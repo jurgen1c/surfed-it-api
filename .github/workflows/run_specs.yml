@@ -34,10 +34,19 @@ jobs:
           bundler install
       - name: Create database
         run: |
-          bundle exec rake db:setup
-          bundle exec rake db:migrate
+          cp config/database.yml.github-actions config/database.yml
+          bundle exec rake db:create
+          bundle exec rake db:schema:load
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
       - name: Run tests
         run: bundler exec rspec spec/*
+        env:
+          RAILS_ENV: test
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
       - name: Upload coverage results
         uses: actions/upload-artifact@master
         if: always()
