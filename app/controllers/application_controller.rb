@@ -4,11 +4,16 @@ class ApplicationController < ActionController::API
 
   protected
 
+  def current_token
+    request.env['warden-jwt_auth.token']
+  end
+
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up) do |u|
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:email]) do |u|
       u.permit(:name, :username, :email, :password,
                :password_confirmation, :avatar, :bio)
     end
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:email])
     devise_parameter_sanitizer.permit(:account_update) do |u|
       u.permit(:name, :username, :email, :password,
                :current_password, :avatar, :bio)
