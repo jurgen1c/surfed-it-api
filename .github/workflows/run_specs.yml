@@ -7,7 +7,7 @@ env:
   DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
 
 name: Rails Specs
-on: [push, pull_request]
+on: pull_request
 jobs:
   rspec-test:
     name: RSpec
