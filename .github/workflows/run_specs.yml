@@ -2,6 +2,8 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   POSTGRES_DB: surfed_it_api_test
+  POSTGRES_HOST: localhost
+  RAILS_ENV: test
   DEVISE_JWT_SECRET_KEY: ${{ secrets.DEVISE_JWT_SECRET_KEY }}
 
 name: Rails Specs
@@ -31,13 +33,9 @@ jobs:
           gem install bundler
           bundler install
       - name: Create database
-        env:
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_USER: postgres
-          RAILS_ENV: test
         run: |
-          bundler exec rails db:create RAILS_ENV=test
-          bundler exec rails db:migrate RAILS_ENV=test
+          bundle exec rake db:setup
+          bundle exec rake db:migrate
       - name: Run tests
         run: bundler exec rspec spec/*
       - name: Upload coverage results
