@@ -30,4 +30,15 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  controllers:
+    confirmations:
+      resent: "Confirmation email sent successfully."
+      success: "Email confirmed successfully."
+    passwords:
+      email_required: "Email is required."
+      email_sent: "Email sent. Please check your inbox."
+      success: "Password updated successfully. You may need to sign in again."
+    registrations:
+      confirm: "Please confirm your email address."
+    sessions:
+      sign_out: "Signed out successfully."
