@@ -13,12 +13,12 @@ jobs:
     services:
       postgres:
         image: postgres:latest
+        ports:
+          - 5432:5432
         env:
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-        ports:
-          - 5432:5432
     steps:
       - uses: actions/checkout@v1
       - uses: ruby/setup-ruby@v1
@@ -31,6 +31,10 @@ jobs:
           gem install bundler
           bundler install
       - name: Create database
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+          RAILS_ENV: test
         run: |
           bundler exec rails db:create RAILS_ENV=test
           bundler exec rails db:migrate RAILS_ENV=test
