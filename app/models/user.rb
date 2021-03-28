@@ -38,10 +38,37 @@ class User < ApplicationRecord
 
   has_many :allowlisted_jwts, dependent: :destroy
 
+  has_one_attached :avatar
+
+  #after_commit :add_default_avatar, on: %i[create update]
+
   def for_display
     {
       email: email,
+      name: name,
+      username: username,
+      bio: bio,
       id: id,
     }
+  end
+
+  def avatar_thumbnail
+    avatar.variant(resize: '150X150!').processed
+  end
+
+  private
+
+  def add_default_avatar
+    return if avatar.attached?
+
+    avatar.attach(
+      io: File.open(
+        Rails.root.join(
+          'app', 'assets', 'profile.png'
+        )
+      ),
+      filename: 'profile.png',
+      content_type: 'image/png'
+    )
   end
 end

@@ -53,7 +53,7 @@ group :development do
   gem 'annotate'
   # Local Emails
   # https://github.com/ryanb/letter_opener
-  gem 'letter_opener'
+  gem "letter_opener"
 end
 
 group :test do
